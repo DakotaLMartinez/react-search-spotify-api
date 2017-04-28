@@ -42,5 +42,11 @@ describe('App', () => {
       expect(search.calledOnce);
     })
 
+    it('finds the correct API endpoint on search', () => {
+      wrapper.find('input').simulate('change', { target: { value: 'The Beatles' } });
+      const uri = wrapper.instance().search();
+      expect(uri).to.equal('https://api.spotify.com/v1/search?q=The%20Beatles&type=artist&limit=1');
+    });
+
   });
 });
