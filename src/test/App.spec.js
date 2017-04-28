@@ -5,6 +5,7 @@ import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 
 import App from '../components/App';
+import beatlesData from './fixtures/beatles.js';
 
 describe('App', () => {
   it('should display Music Master', () => {
@@ -42,11 +43,40 @@ describe('App', () => {
       expect(search.calledOnce);
     })
 
-    it('finds the correct API endpoint on search', () => {
+    it('getApiUrl() finds the correct API endpoint on search', () => {
       wrapper.find('input').simulate('change', { target: { value: 'The Beatles' } });
-      const uri = wrapper.instance().search();
+      const uri = wrapper.instance().getApiUrl();
       expect(uri).to.equal('https://api.spotify.com/v1/search?q=The%20Beatles&type=artist&limit=1');
     });
+
+    describe('API', () => {
+      let wrapper;
+      
+      beforeEach(() => {
+        wrapper = mount(<App/>);
+        global.fetch = jest.fn().mockImplementation(() => {
+          return new Promise((resolve, reject) => {
+            resolve({
+              'ok': true, 
+              'status': 200, 
+              json: function() {
+                return beatlesData
+              }
+            });
+          });
+        });
+                
+      });
+
+      it('search() makes a request to the spotify API to get artist data', async () => {
+        wrapper.setState({query: 'The Beatles'});
+        const response = await wrapper.instance().search();
+        expect(response.artists.items[0].name).to.equal('The Beatles');
+      });
+      
+    });
+
+    
 
   });
 });

@@ -14,12 +14,24 @@ class App extends Component {
   //  funcProp: PropTypes.func.isRequired
   //};
 
-  search() {
-    console.log('this.state', this.state);
+  getApiUrl() {
     const BASE_URL = 'https://api.spotify.com/v1/search';
-    const FETCH_URL = `${BASE_URL}?q=${encodeURI(this.state.query)}&type=artist&limit=1`;
-    console.log(FETCH_URL);
-    return FETCH_URL;
+    return `${BASE_URL}?q=${encodeURI(this.state.query)}&type=artist&limit=1`;
+  }
+
+  search() {
+    //console.log('this.state', this.state);
+    
+    const result = fetch(this.getApiUrl(), {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      //.then(json => console.log('response.json', json));
+      console.log(result);
+    return result;
   }
   
   render() {
