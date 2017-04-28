@@ -3,6 +3,10 @@ const beatlesData = {
     href: 'https://api.spotify.com/v1/search?query=The+Beatles&type=artist&offset=0&limit=1', 
     items: [
       {
+        followers: {
+          href: null, 
+          total: 3170961
+        },
         genres: [
           'british invasion',
           'classic rock',
