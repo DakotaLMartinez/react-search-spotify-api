@@ -38,10 +38,9 @@ describe('App', () => {
 
     it('calls the search method upon hitting the return key', () => {
       const input = wrapper.find('input');
-      input.simulate('keyDown', { key: 'Enter', keyCode: 69, which: 69 });
+      input.simulate('keyDown', { key: 'Enter' });
       expect(search.calledOnce);
     })
-
 
   });
 });
