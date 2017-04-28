@@ -11,13 +11,13 @@ describe('App', () => {
     expect(wrapper.text()).to.match(/Music Master/);
   });
 
-  it('renders tag: .Gallery div', () => {
+  it('renders tag: #Gallery', () => {
     const wrapper = shallow(<App/>);
-    expect(wrapper.find('.Gallery')).to.have.length(1);
+    expect(wrapper.find('#Gallery')).to.have.length(1);
   });
 
-  it('renders tag: .Profile', () => {
+  it('renders tag: #Profile', () => {
     const wrapper = shallow(<App/>);
-    expect(wrapper.find('.Profile')).to.have.length(1);
+    expect(wrapper.find('#Profile')).to.have.length(1);
   });
 });
