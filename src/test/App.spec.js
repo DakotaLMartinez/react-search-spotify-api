@@ -6,6 +6,8 @@ import sinon from 'sinon';
 
 import App from '../components/App';
 import beatlesData from './fixtures/beatles.js';
+import Profile from '../components/Profile';
+// import helper from './helper';
 
 describe('App', () => {
   it('should display Music Master', () => {
@@ -21,6 +23,16 @@ describe('App', () => {
   it('renders tag: #Profile', () => {
     const wrapper = shallow(<App/>);
     expect(wrapper.find('#Profile')).to.have.length(1);
+  });
+
+  it('has state: query, with initial value: ""', () => {
+    const wrapper = mount(<App/>);
+    expect(wrapper.state().query).to.equal("");
+  });
+
+  it('has state: artist, with initial value: null', () => {
+    const wrapper = mount(<App/>);
+    expect(wrapper.state().artist).to.equal(null);
   });
 
   describe('behavior', () => {
@@ -72,6 +84,10 @@ describe('App', () => {
         wrapper.setState({query: 'The Beatles'});
         const response = await wrapper.instance().search();
         expect(response.artists.items[0].name).to.equal('The Beatles');
+      });
+
+      it('renders Profile component', () => {
+        expect(wrapper.find(Profile).length).to.equal(1);
       });
       
     });

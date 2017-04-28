@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import icons from 'glyphicons';
+import Profile from './Profile';
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      query: ''
+      query: '',
+      artist: null
     }
   }
   //static propTypes = {
@@ -53,8 +55,7 @@ class App extends Component {
         </form>
         <div className="h1 cb"></div>
         <div id="Profile">
-          <div>Artist Picture</div>
-          <div>Artist Name</div>
+          <Profile artist={this.state.artist}/>
         </div>
         <div id="Gallery">
           Gallery
