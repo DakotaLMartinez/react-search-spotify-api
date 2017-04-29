@@ -27,8 +27,23 @@ describe('Profile', () => {
   });
 
   it('renders the follower count of an artist', () => {
-    expect(wrapper.find('#artist-follower-count').text()).to.equal('3170961');
+    expect(wrapper.find('#artist-follower-count').text()).to.equal('3170961 followers');
   });
+
+  describe('when no artist is loaded', () => {
+    let wrapper;
+    
+    beforeEach(() => {
+      wrapper = shallow(<Profile artist={null}/>);
+    });
+    
+    it('does not display profile', () => {
+      expect(wrapper.find('.profile')).length.to.be(0);
+    });
+    
+  });
+
+  
 
   it('renders the genres of an artist', () => {
     const genres = wrapper.find('#artist-genres')

@@ -8,28 +8,31 @@ class Profile extends Component {
   };
   
   render() {
-    let artist = this.props.artist !== null ? this.props.artist : { name: '', followers: { total: ''}, images: [{url: ''}], genres: [] };
+    let dummyArtist = { name: '', followers: { total: ''}, images: [{url: ''}], genres: [] };
+    let artist = this.props.artist !== null ? this.props.artist : dummyArtist;
     //artist = data.artists.items[0];
     let genres = artist.genres;
     return (
-      <div className="profile cf tl">
-        { artist.images[0].url &&
+      <div className="profile-wrapper cf tl">
+      { artist !== dummyArtist &&
+        <div className="profile">
           <img 
             src={artist.images[0].url} 
             alt="{artist.name} Profile" 
             id="profile-img"
             className="fl w4 h4 br-100 ba bw1 b--white" />
-        }
-        <div className="artist-info fl border-box pa3 h4">
-          <div id="artist-name" className="f3 pb2">{artist.name}</div>
-          <div id="artist-follower-count" className="">{artist.followers.total}</div>
-          <div id="artist-genres" className="">
-            { genres.length > 0 &&
-              genres.map((genre, k) => <span key={k}>{genre}</span>)
-                    .reduce((prev,curr) => [prev, ', ', curr])
-            }
+          <div className="artist-info fl border-box pa3 h4">
+            <div id="artist-name" className="f3 pb2">{artist.name}</div>
+            <div id="artist-follower-count" className="">{artist.followers.total} followers</div>
+            <div id="artist-genres" className="">
+              { genres.length > 0 &&
+                genres.map((genre, k) => <span key={k}>{genre}</span>)
+                      .reduce((prev,curr) => [prev, ', ', curr])
+              }
+            </div>
           </div>
         </div>
+      }
       </div>
     );
   }
