@@ -7,7 +7,7 @@ import sinon from 'sinon';
 import App from '../components/App';
 import beatlesData from './fixtures/beatles.js';
 import Profile from '../components/Profile';
-// import helper from './helper';
+//import helper from './helper';
 
 describe('App', () => {
   it('should display Music Master', () => {
@@ -25,6 +25,11 @@ describe('App', () => {
     expect(wrapper.find('#Profile')).to.have.length(1);
   });
 
+  it('renders Profile component', () => {
+    const wrapper = shallow(<App/>);
+    expect(wrapper.find(Profile).length).to.equal(1);
+  });
+  
   it('has state: query, with initial value: ""', () => {
     const wrapper = mount(<App/>);
     expect(wrapper.state().query).to.equal("");
@@ -62,7 +67,7 @@ describe('App', () => {
     });
 
     describe('API', () => {
-      let wrapper;
+      let wrapper, beatles;
       
       beforeEach(() => {
         wrapper = mount(<App/>);
@@ -77,17 +82,25 @@ describe('App', () => {
             });
           });
         });
-                
+        beatles = beatlesData.artists.items[0];       
       });
 
       it('search() makes a request to the spotify API to get artist data', async () => {
         wrapper.setState({query: 'The Beatles'});
         const response = await wrapper.instance().search();
-        expect(response.artists.items[0].name).to.equal('The Beatles');
+        expect(response.artists.items[0]).to.equal(beatles);
       });
 
-      it('renders Profile component', () => {
-        expect(wrapper.find(Profile).length).to.equal(1);
+      it('search() calls the updateProfile() function', async () => {
+        const updateProfile = sinon.spy(wrapper.instance(), 'updateProfile');
+        const response = await wrapper.instance().search();
+        expect(updateProfile.calledOnce).to.equal(true);
+      });
+
+      it('searching for an artist renders the profile for that Artist', async () => {
+        wrapper.setState({query: 'The Beatles'});
+        const response = await wrapper.instance().search();
+        expect(wrapper.find(Profile).props().artist).to.equal(beatles);
       });
       
     });

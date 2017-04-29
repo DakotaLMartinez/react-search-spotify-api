@@ -9,6 +9,9 @@ class App extends Component {
       query: '',
       artist: null
     }
+    this.updateProfile = this.updateProfile.bind(this);
+    this.search = this.search.bind(this);
+    this.getApiUrl = this.getApiUrl.bind(this);
   }
   //static propTypes = {
   //  stringProp: PropTypes.string.isRequired,
@@ -31,9 +34,14 @@ class App extends Component {
       }
     })
       .then(response => response.json())
-      //.then(json => console.log('response.json', json));
-      console.log(result);
+      .then(json => this.updateProfile(json));
     return result;
+  }
+
+  updateProfile(artistJSON) {
+    const artist = artistJSON.artists.items[0];
+    this.setState({artist});
+    return artistJSON;
   }
   
   render() {
