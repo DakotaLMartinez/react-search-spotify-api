@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import icons from 'glyphicons';
 import Profile from './Profile';
+import Spotify from '../spotify';
 
 class App extends Component {
   constructor(props) {
@@ -27,14 +28,9 @@ class App extends Component {
   search() {
     //console.log('this.state', this.state);
     
-    const result = fetch(this.getApiUrl(), {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
+    const result = Spotify.search(this.state.query)
       .then(json => this.updateProfile(json));
+      console.log(result);
     return result;
   }
 

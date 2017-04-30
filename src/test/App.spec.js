@@ -7,7 +7,8 @@ import sinon from 'sinon';
 import App from '../components/App';
 import beatlesData from './fixtures/beatles.js';
 import Profile from '../components/Profile';
-//import helper from './helper';
+import Spotify from '../spotify';
+//import helper from './helpers/helper';
 
 describe('App', () => {
   it('should display Music Master', () => {
@@ -46,25 +47,19 @@ describe('App', () => {
     beforeEach(() => {
       wrapper = mount(<App/>);
       button  = wrapper.find('button');
-      search  = sinon.spy(wrapper.instance(), 'search');
+      search  = Spotify.search;
     });
 
-    it('calls the search method upon clicking the search button', () => {
+    it('clicking the search button calls the search() function on Spotify API', () => {
       button.simulate('click');
       expect(search.calledOnce);
     });
 
-    it('calls the search method upon hitting the return key', () => {
+    it('clicking the search button calls the search() function on Spotify API', () => {
       const input = wrapper.find('input');
       input.simulate('keyDown', { key: 'Enter' });
       expect(search.calledOnce);
     })
-
-    it('getApiUrl() finds the correct API endpoint on search', () => {
-      wrapper.find('input').simulate('change', { target: { value: 'The Beatles' } });
-      const uri = wrapper.instance().getApiUrl();
-      expect(uri).to.equal('https://api.spotify.com/v1/search?q=The%20Beatles&type=artist&limit=1');
-    });
 
     describe('API', () => {
       let wrapper, beatles;
@@ -82,11 +77,11 @@ describe('App', () => {
             });
           });
         });
+        wrapper.setState({query: 'The Beatles'});
         beatles = beatlesData.artists.items[0];       
       });
 
       it('search() makes a request to the spotify API to get artist data', async () => {
-        wrapper.setState({query: 'The Beatles'});
         const response = await wrapper.instance().search();
         expect(response.artists.items[0]).to.equal(beatles);
       });
@@ -98,7 +93,6 @@ describe('App', () => {
       });
 
       it('searching for an artist renders the profile for that Artist', async () => {
-        wrapper.setState({query: 'The Beatles'});
         const response = await wrapper.instance().search();
         expect(wrapper.find(Profile).props().artist).to.equal(beatles);
       });

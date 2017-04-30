@@ -5,7 +5,7 @@ import { shallow, mount } from 'enzyme';
 
 import Profile from '../components/Profile';
 import beatlesData from './fixtures/beatles.js';
-//import helper from './helper';
+//import helper from './helpers/helper';
 
 describe('Profile', () => {
   let artist, wrapper;
