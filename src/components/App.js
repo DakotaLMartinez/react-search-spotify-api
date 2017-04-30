@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import icons from 'glyphicons';
 import Profile from './Profile';
-import Spotify from '../spotify';
+import Spotify from '../lib/spotify';
 
 class App extends Component {
   constructor(props) {

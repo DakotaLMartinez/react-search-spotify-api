@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { shallow, mount } from 'enzyme';
 
 
-import Spotify from '../spotify';
+import Spotify from '../lib/spotify';
 import beatlesData from './fixtures/beatles';
 import beatlesTracks from './fixtures/beatlesTracks';
 

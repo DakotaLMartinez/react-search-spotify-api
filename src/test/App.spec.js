@@ -7,7 +7,7 @@ import sinon from 'sinon';
 import App from '../components/App';
 import beatlesData from './fixtures/beatles.js';
 import Profile from '../components/Profile';
-import Spotify from '../spotify';
+import Spotify from '../lib/spotify';
 //import helper from './helpers/helper';
 
 describe('App', () => {

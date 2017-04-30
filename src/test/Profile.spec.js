@@ -43,8 +43,6 @@ describe('Profile', () => {
     
   });
 
-  
-
   it('renders the genres of an artist', () => {
     const genres = wrapper.find('#artist-genres')
     artist.genres.forEach((genre) =>{
