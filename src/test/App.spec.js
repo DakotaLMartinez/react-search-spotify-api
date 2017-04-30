@@ -42,30 +42,25 @@ describe('App', () => {
   });
 
   describe('behavior', () => {
-    let wrapper, button, search;
+    let wrapper, search;
     
     beforeEach(() => {
       wrapper = mount(<App/>);
-      button  = wrapper.find('button');
-      search  = Spotify.search;
     });
 
     it('clicking the search button calls the search() function on Spotify API', () => {
-      button.simulate('click');
-      expect(search.calledOnce);
+      search = sinon.spy(Spotify, 'search');
+
+      wrapper.find('form').simulate('submit');
+      sinon.assert.calledOnce(search);
+
+      search.restore();
     });
 
-    it('clicking the search button calls the search() function on Spotify API', () => {
-      const input = wrapper.find('input');
-      input.simulate('keyDown', { key: 'Enter' });
-      expect(search.calledOnce);
-    })
-
-    describe('API', () => {
-      let wrapper, beatles;
+    describe('API interaction', () => {
+      let beatles;
       
       beforeEach(() => {
-        wrapper = mount(<App/>);
         global.fetch = jest.fn().mockImplementation(() => {
           return new Promise((resolve, reject) => {
             resolve({
@@ -88,12 +83,12 @@ describe('App', () => {
 
       it('search() calls the updateProfile() function', async () => {
         const updateProfile = sinon.spy(wrapper.instance(), 'updateProfile');
-        const response = await wrapper.instance().search();
+        await wrapper.instance().search();
         expect(updateProfile.calledOnce).to.equal(true);
       });
 
       it('searching for an artist renders the profile for that Artist', async () => {
-        const response = await wrapper.instance().search();
+        await wrapper.instance().search();
         expect(wrapper.find(Profile).props().artist).to.equal(beatles);
       });
       

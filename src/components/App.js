@@ -26,11 +26,8 @@ class App extends Component {
   }
 
   search() {
-    //console.log('this.state', this.state);
-    
     const result = Spotify.search(this.state.query)
       .then(json => this.updateProfile(json));
-      console.log(result);
     return result;
   }
 
@@ -44,7 +41,7 @@ class App extends Component {
     return (
       <div className="tc pa5">
         <div id="App-title" className="f3">Music Master</div>
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={ (e) => { e.preventDefault(); this.search(); } }>
           <input 
             className="db fl h2 w-90 ba bw2 b--lightest-blue" 
             type="text" 
@@ -52,8 +49,7 @@ class App extends Component {
             value={this.state.query}
             onChange={event => {this.setState({query: event.target.value }) }} />
           <button 
-            className="db fl h2 button-reset border-box w-10 ba bw2 b--lightest-blue"
-            onClick={() => this.search()}>
+            className="db fl h2 button-reset border-box w-10 ba bw2 b--lightest-blue">
             {icons.magnifyingGlass}
           </button>
         </form>
