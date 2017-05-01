@@ -1,3 +1,5 @@
+import apiUtils from './apiUtils';
+
 const BASE_URL = 'https://api.spotify.com/v1';
 
 const Spotify = {
@@ -17,7 +19,8 @@ const Spotify = {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json());
+      .then(apiUtils.checkStatus)
+      .then(response => response.json())
   },
 
   getTracks: (artistId) => {
@@ -28,7 +31,8 @@ const Spotify = {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json());
+      .then(apiUtils.checkStatus)
+      .then(response => response.json())
   }
 }
 

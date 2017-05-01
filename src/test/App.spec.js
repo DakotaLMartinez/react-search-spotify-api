@@ -9,8 +9,13 @@ import beatlesData from './fixtures/beatles.js';
 import Profile from '../components/Profile';
 import Spotify from '../lib/spotify';
 //import helper from './helpers/helper';
+import mockFetch from './helpers/mockFetch';
+import mockResponse from './helpers/mockResponses';
 
 describe('App', () => {
+  afterAll(() => {
+    mockFetch.restore();
+  });
   it('should display Music Master', () => {
     const wrapper = shallow(<App/>);
     expect(wrapper.text()).to.match(/Music Master/);
@@ -61,17 +66,7 @@ describe('App', () => {
       let beatles;
       
       beforeEach(() => {
-        global.fetch = jest.fn().mockImplementation(() => {
-          return new Promise((resolve, reject) => {
-            resolve({
-              'ok': true, 
-              'status': 200, 
-              json: function() {
-                return beatlesData
-              }
-            });
-          });
-        });
+        mockResponse.beatlesSearch()
         wrapper.setState({query: 'The Beatles'});
         beatles = beatlesData.artists.items[0];       
       });
