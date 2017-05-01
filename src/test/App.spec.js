@@ -89,6 +89,25 @@ describe('App', () => {
       
     });
 
+    describe('No Search query', () => {
+        
+        beforeEach(() => {
+          mockResponse.emptySearch();     
+        });
+      
+        it('displays an error message', async () => {
+          const response = await wrapper.instance().search()
+          expect(wrapper.find('.error').text()).to.equal('Please enter a search query');
+        });
+
+        it('clears the error when a successful search is completed', async () => {
+          await wrapper.instance().search();
+          mockResponse.beatlesSearch();
+          await wrapper.instance().search();
+          expect(wrapper.find('.error').text()).to.equal('');
+        });
+       
+      });
     
 
   });

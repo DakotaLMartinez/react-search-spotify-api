@@ -8,7 +8,8 @@ class App extends Component {
     super(props)
     this.state = {
       query: '',
-      artist: null
+      artist: null,
+      errorMessage: ''
     }
     this.updateProfile = this.updateProfile.bind(this);
     this.search = this.search.bind(this);
@@ -27,14 +28,32 @@ class App extends Component {
 
   search() {
     const result = Spotify.search(this.state.query)
-      .then(json => this.updateProfile(json));
+      .then(json => this.updateProfile(json))
+      .catch(e => {
+        this.displayErrorMessage('Please enter a search query')
+      });
     return result;
   }
 
   updateProfile(artistJSON) {
     const artist = artistJSON.artists.items[0];
-    this.setState({artist});
+    this.setState({
+      artist: artist, 
+      errorMessage: ''
+    });
     return artistJSON;
+  }
+
+  displayErrorMessage(message) {
+    this.setState({
+      errorMessage: message
+    });
+  }
+
+  clearErrorMessage() {
+    this.setState({
+      errorMessage: ''
+    });
   }
   
   render() {
@@ -53,7 +72,7 @@ class App extends Component {
             {icons.magnifyingGlass}
           </button>
         </form>
-        <div className="h1 cb"></div>
+        <div className="h1 cb error">{this.state.errorMessage}</div>
         <div id="Profile">
           <Profile artist={this.state.artist}/>
         </div>
