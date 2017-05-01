@@ -8,7 +8,6 @@ import Spotify from '../lib/spotify';
 import beatlesData from './fixtures/beatles';
 import beatlesTracks from './fixtures/beatlesTracks';
 
-console.log(Spotify);
 describe('Spotify', () => {
   describe('API', () => {
 
