@@ -13,7 +13,6 @@ class App extends Component {
     }
     this.updateProfile = this.updateProfile.bind(this);
     this.search = this.search.bind(this);
-    this.getApiUrl = this.getApiUrl.bind(this);
   }
   //static propTypes = {
   //  stringProp: PropTypes.string.isRequired,
@@ -21,18 +20,22 @@ class App extends Component {
   //  funcProp: PropTypes.func.isRequired
   //};
 
-  getApiUrl() {
-    const BASE_URL = 'https://api.spotify.com/v1/search';
-    return `${BASE_URL}?q=${encodeURI(this.state.query)}&type=artist&limit=1`;
-  }
-
   search() {
     const result = Spotify.search(this.state.query)
-      .then(json => this.updateProfile(json))
+      .then(json => this.handleSearch(json))
       .catch(e => {
         this.displayErrorMessage('Please enter a search query')
       });
     return result;
+  }
+
+  handleSearch(artistJSON) {
+    const artist = artistJSON.artists.items[0];
+    if(artist) {
+      return this.updateProfile(artistJSON)
+    } else {
+      this.displayErrorMessage('Artist not found, please try again');
+    }
   }
 
   updateProfile(artistJSON) {
@@ -50,11 +53,6 @@ class App extends Component {
     });
   }
 
-  clearErrorMessage() {
-    this.setState({
-      errorMessage: ''
-    });
-  }
   
   render() {
     return (

@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 
 class Profile extends Component {
   static propTypes = {
-   artist: PropTypes.object,
+    artist: PropTypes.object,
   };
   
   render() {
     let dummyArtist = { name: '', followers: { total: ''}, images: [{url: ''}], genres: [] };
-    let artist = this.props.artist !== null ? this.props.artist : dummyArtist;
+    let artist = this.props.artist ? this.props.artist : dummyArtist;
     //artist = data.artists.items[0];
     let genres = artist.genres;
     return (

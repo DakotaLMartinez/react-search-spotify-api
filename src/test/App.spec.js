@@ -71,7 +71,7 @@ describe('App', () => {
         beatles = beatlesData.artists.items[0];       
       });
 
-      it('search() makes a request to the spotify API to get artist data', async () => {
+      it('search() gets artist data from the spotify API', async () => {
         const response = await wrapper.instance().search();
         expect(response.artists.items[0]).to.equal(beatles);
       });
@@ -89,25 +89,39 @@ describe('App', () => {
       
     });
 
-    describe('No Search query', () => {
+    describe('Error handling', () => {
         
-        beforeEach(() => {
-          mockResponse.emptySearch();     
-        });
-      
-        it('displays an error message', async () => {
-          const response = await wrapper.instance().search()
-          expect(wrapper.find('.error').text()).to.equal('Please enter a search query');
-        });
-
-        it('clears the error when a successful search is completed', async () => {
-          await wrapper.instance().search();
-          mockResponse.beatlesSearch();
-          await wrapper.instance().search();
-          expect(wrapper.find('.error').text()).to.equal('');
-        });
-       
+      beforeEach(() => {
+        mockResponse.emptySearch();     
       });
+    
+      it('displays an error message on empty search', async () => {
+        const response = await wrapper.instance().search()
+        expect(wrapper.find('.error').text()).to.equal('Please enter a search query');
+      });
+
+      it('clears the error when a successful search is completed', async () => {
+        await wrapper.instance().search();
+        mockResponse.beatlesSearch();
+        await wrapper.instance().search();
+        expect(wrapper.find('.error').text()).to.equal('');
+      });
+
+      it('displays an artist not found message upon unsuccessful search', async() => {
+        mockResponse.artistNotFound();
+        await wrapper.instance().search();
+        expect(wrapper.find('.error').text()).to.equal('Artist not found, please try again');
+      });
+
+      it('clears artist not found message upon successful search', async() => {
+        mockResponse.artistNotFound();
+        await wrapper.instance().search();
+        mockResponse.beatlesSearch();
+        await wrapper.instance().search();
+        expect(wrapper.find('.error').text()).to.equal('');
+      });
+      
+    });
     
 
   });
