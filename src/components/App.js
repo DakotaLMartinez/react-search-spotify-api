@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import icons from 'glyphicons';
 import Profile from './Profile';
 import Spotify from '../lib/spotify';
+import Gallery from './Gallery';
 
 class App extends Component {
   constructor(props) {
@@ -74,9 +75,7 @@ class App extends Component {
         <div id="Profile">
           <Profile artist={this.state.artist}/>
         </div>
-        <div id="Gallery">
-          Gallery
-        </div>
+        <Gallery />
       </div>
     );
   }

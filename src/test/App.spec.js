@@ -5,9 +5,11 @@ import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 
 import App from '../components/App';
-import beatlesData from './fixtures/beatles.js';
 import Profile from '../components/Profile';
+import Gallery from '../components/Gallery';
 import Spotify from '../lib/spotify';
+
+import beatlesData from './fixtures/beatles.js';
 //import helper from './helpers/helper';
 import mockFetch from './helpers/mockFetch';
 import mockResponse from './helpers/mockResponses';
@@ -21,11 +23,6 @@ describe('App', () => {
     expect(wrapper.text()).to.match(/Music Master/);
   });
 
-  it('renders tag: #Gallery', () => {
-    const wrapper = shallow(<App/>);
-    expect(wrapper.find('#Gallery')).to.have.length(1);
-  });
-
   it('renders tag: #Profile', () => {
     const wrapper = shallow(<App/>);
     expect(wrapper.find('#Profile')).to.have.length(1);
@@ -34,6 +31,11 @@ describe('App', () => {
   it('renders Profile component', () => {
     const wrapper = shallow(<App/>);
     expect(wrapper.find(Profile).length).to.equal(1);
+  });
+
+  it('renders Gallery component', () => {
+    const wrapper = shallow(<App/>);
+    expect(wrapper.find(Gallery)).to.have.length(1);
   });
   
   it('has state: query, with initial value: ""', () => {
