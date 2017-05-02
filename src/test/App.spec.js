@@ -84,6 +84,12 @@ describe('App', () => {
         expect(updateProfile.calledOnce).to.equal(true);
       });
 
+      it('search() calls the loadTracks() function', async () => {
+        const loadTracks = sinon.spy(wrapper.instance(), 'loadTracks');
+        await wrapper.instance().search();
+        expect(loadTracks.calledOnce).to.equal(true);
+      });
+
       it('searching for an artist renders the profile for that Artist', async () => {
         await wrapper.instance().search();
         expect(wrapper.find(Profile).props().artist).to.equal(beatles);

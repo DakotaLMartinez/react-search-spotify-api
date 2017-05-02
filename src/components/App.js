@@ -12,7 +12,8 @@ class App extends Component {
     this.state = {
       query: '',
       artist: null,
-      errorMessage: ''
+      errorMessage: '',
+      tracks: undefined
     }
     this.updateProfile = this.updateProfile.bind(this);
     this.search = this.search.bind(this);
@@ -35,10 +36,22 @@ class App extends Component {
   handleSearch(artistJSON) {
     const artist = artistJSON.artists.items[0];
     if(artist) {
+      this.loadTracks(artist.id);
       return this.updateProfile(artistJSON)
     } else {
       this.displayErrorMessage('Artist not found, please try again');
+      return false;
     }
+  }
+
+  loadTracks(artistId) {
+    console.log(artistId);
+    Spotify.getTracks(artistId)
+      .then((json) => {
+        this.setState({
+          tracks: json.tracks
+        });
+      });
   }
 
   updateProfile(artistJSON) {
@@ -77,7 +90,7 @@ class App extends Component {
         <div id="Profile">
           <Profile artist={this.state.artist}/>
         </div>
-        <Gallery tracks={beatlesTracks.tracks}/>
+        <Gallery tracks={this.state.tracks}/>
       </div>
     );
   }
