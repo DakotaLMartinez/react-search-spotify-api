@@ -4,6 +4,8 @@ import Profile from './Profile';
 import Spotify from '../lib/spotify';
 import Gallery from './Gallery';
 
+import beatlesTracks from '../test/fixtures/beatlesTracks';
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -57,7 +59,7 @@ class App extends Component {
   
   render() {
     return (
-      <div className="tc pa5">
+      <div className="tc pa5-ns pa3">
         <div id="App-title" className="f3">Music Master</div>
         <form onSubmit={ (e) => { e.preventDefault(); this.search(); } }>
           <input 
@@ -75,7 +77,7 @@ class App extends Component {
         <div id="Profile">
           <Profile artist={this.state.artist}/>
         </div>
-        <Gallery />
+        <Gallery tracks={beatlesTracks.tracks}/>
       </div>
     );
   }

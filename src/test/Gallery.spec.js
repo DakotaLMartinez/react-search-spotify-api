@@ -25,5 +25,17 @@ describe('Gallery', () => {
     const wrapper = mount(<Gallery/>);
     expect(wrapper.props().tracks).to.eql([]);
   });
+
+  it('renders tag: .album-art', () => {
+    expect(wrapper.find('.album-art')).to.have.length(10);
+  });
+
+  it('renders the correct album art', () => {
+    expect(wrapper.find('.album-art').first().props().src).to.contain('https://i.scdn.co/image/31327f9fe6b6e0bd6e431a4add681397e95c6329');
+  });
+
+  it('displays the name of the song', () => {
+    expect(wrapper.find('.track').first().text()).to.include("Here Comes The Sun - Remastered")
+  });
   
 });
