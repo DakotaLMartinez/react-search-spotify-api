@@ -10,7 +10,7 @@ class Gallery extends Component {
   render() {
     return (
       <ul className="Gallery list pl0">
-        {this.props.tracks.map((track) => {
+        {this.props.tracks && this.props.tracks.map((track) => {
           return <li 
                   key={track.id} 
                   className="track fl-ns w-25-ns">
