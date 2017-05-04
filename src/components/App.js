@@ -45,7 +45,6 @@ class App extends Component {
   }
 
   loadTracks(artistId) {
-    console.log(artistId);
     Spotify.getTracks(artistId)
       .then((json) => {
         this.setState({
