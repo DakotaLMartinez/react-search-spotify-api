@@ -99,6 +99,7 @@ class Gallery extends Component {
                   <div className="relative ma1 aspect-ratio-ns aspect-ratio--1x1-ns">
                     <img
                       className="album-art"
+                      alt={`${track.name} album art`}
                       src={track.album.images[1].url} 
                       onClick={() => this.handlePlayClick(track.preview_url)}/>
                     <span 

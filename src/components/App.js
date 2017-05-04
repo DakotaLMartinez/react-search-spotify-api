@@ -4,7 +4,7 @@ import Profile from './Profile';
 import Spotify from '../lib/spotify';
 import Gallery from './Gallery';
 
-import beatlesTracks from '../test/fixtures/beatlesTracks';
+// import beatlesTracks from '../test/fixtures/beatlesTracks';
 
 class App extends Component {
   constructor(props) {
