@@ -18,11 +18,6 @@ class App extends Component {
     this.updateProfile = this.updateProfile.bind(this);
     this.search = this.search.bind(this);
   }
-  //static propTypes = {
-  //  stringProp: PropTypes.string.isRequired,
-  //  arrayProp: PropTypes.array.isRequired, 
-  //  funcProp: PropTypes.func.isRequired
-  //};
 
   search() {
     const result = Spotify.search(this.state.query)
@@ -72,7 +67,7 @@ class App extends Component {
   render() {
     return (
       <div className="tc pa5-ns pa3">
-        <div id="App-title" className="f3">Music Master</div>
+        <div id="App-title" className="f3">Search Spotify API for an Artist and Preview their Top Tracks</div>
         <form onSubmit={ (e) => { e.preventDefault(); this.search(); } }>
           <input 
             className="db fl h2 w-90 ba bw2 b--lightest-blue" 
