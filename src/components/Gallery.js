@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import PauseButton from '../lib/icons';
 
 class Gallery extends Component {
   constructor(props) {
@@ -88,6 +89,14 @@ class Gallery extends Component {
       playing: true
     });
   }
+
+  displayIcon(url) {
+    if(this.state.playing && this.state.playingUrl === url) {
+      return <PauseButton/>;
+    } else {
+      return "\u25B6";
+    }
+  }
   
   render() {
     return (
@@ -102,6 +111,11 @@ class Gallery extends Component {
                       alt={`${track.name} album art`}
                       src={track.album.images[1].url} 
                       onClick={() => this.handlePlayClick(track.preview_url)}/>
+                    <div className="playButton absolute bg-black white br-100 w2 h2 nt3 nb3 nl3 nr3 pt2 pl1 pointer"
+                         style={{ top: '50%', left: '50%' }}
+                         onClick={() => this.handlePlayClick(track.preview_url)}>
+                         {this.displayIcon(track.preview_url)}
+                    </div>
                     <span 
                       className="track-name db f7 small w-100 tc bg-black o-70 absolute top-0"
                       style={{fontSize: '0.6rem'}}>
